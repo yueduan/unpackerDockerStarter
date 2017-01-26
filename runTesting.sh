@@ -10,7 +10,6 @@ do
 
 	# copy apps over
 	./copyAppsOver.sh $i $id
-	#sudo docker cp ./1/b49ab2a9c5c810244cfcb5225fed4c8a.apk $id:/test_apps/
 
 	echo "running tests on $id"
 	sudo docker exec $id /bin/bash -c "python /unpackerAutoTestingScripts/unpackerAutoTesting.py &" &
