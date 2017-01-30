@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for ((i=1;i<=10;i++));
+for ((i=1;i<=5;i++));
 do
 	# start a new docker container
 	sudo nohup docker run -itd -e DISPLAY=$DISPLAY -v /tmp/.X11-unix/:/tmp/.X11-unix droidscope_new:version2
