@@ -5,7 +5,7 @@ DATE=`date +%Y-%m-%d`
 
 mkdir $DATE
 
-for id in $(sudo docker ps -a -q)
+for id in $(sudo docker ps | grep "droidscope_new:version2" | awk '{print $1}')
 do
 	echo "Retriving results from $id"
 	#sudo docker exec $id /bin/sh -c "find /results -name others.log | xargs rm"

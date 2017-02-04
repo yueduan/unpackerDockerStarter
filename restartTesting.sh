@@ -7,7 +7,7 @@ mkdir $DATE
 declare -A retVal1
 declare -A retVal2
 
-for id in $(sudo docker ps -q)
+for id in $(sudo docker ps | grep "droidscope_new:version2" | awk '{print $1}')
 do 
 	echo "Retriving results from $id"
 	sudo docker exec $id /bin/sh -c "tar cf results_$id.tar.gz /results"
@@ -25,7 +25,7 @@ sleep 200
 
 while :
 do
-        for id in $(sudo docker ps -q)
+        for id in $(sudo docker ps | grep "droidscope_new:version2" | awk '{print $1}')
         do
                 retVal1[$id]=$(sudo docker exec $id /bin/sh -c "ls /results | wc -l")
                 echo "$id: ${retVal1[$id]}"
@@ -33,13 +33,13 @@ do
 
         sleep 1000
 
-        for id in $(sudo docker ps -q)
+        for id in $(sudo docker ps | grep "droidscope_new:version2" | awk '{print $1}')
         do
                 retVal2[$id]=$(sudo docker exec $id /bin/sh -c "ls /results | wc -l")
                 echo "$id: ${retVal2[$id]}"
         done
 
-        for id in $(sudo docker ps -q)
+        for id in $(sudo docker ps | grep "droidscope_new:version2" | awk '{print $1}')
         do
                 dif=$((${retVal2[$id]} - ${retVal1[$id]}))
                 if [ $dif -eq 0 ]
