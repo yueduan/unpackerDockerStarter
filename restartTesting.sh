@@ -44,11 +44,15 @@ do
                 dif=$((${retVal2[$id]} - ${retVal1[$id]}))
                 if [ $dif -eq 0 ]
                 then
-                        echo "no progress for $id, restarting!"
-			sudo docker exec $id /bin/sh -c "killall -9 adb; killall -9 python; killall -9 emulator64-arm"
-			sudo docker exec $id /bin/bash -c "cd /unpackerAutoTestingScripts;git pull"
-			sudo docker exec $id /bin/bash -c "python /unpackerAutoTestingScripts/unpackerAutoTesting.py &" &			
-                fi
+			appRemain=$(sudo docker exec $id /bin/sh -c "ls /test_apps | wc -l")
+			if [ $appRemain -ne 0 ]
+			then
+                        	echo "no progress for $id, restarting!"
+				sudo docker exec $id /bin/sh -c "killall -9 adb; killall -9 python; killall -9 emulator64-arm"
+				sudo docker exec $id /bin/bash -c "cd /unpackerAutoTestingScripts;git pull"
+				sudo docker exec $id /bin/bash -c "python /unpackerAutoTestingScripts/unpackerAutoTesting.py &" &			
+                	fi
+		fi
         done
 
 done
